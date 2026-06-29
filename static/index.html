@@ -54,19 +54,6 @@
                 </div>
             </div>
 
-            <div class="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-3 border-t sm:border-t-0 pt-2 sm:pt-0 border-gray-100 dark:border-gray-800">
-                <div class="relative flex-grow sm:flex-grow-0">
-                    <select id="langSelect" class="w-full sm:w-auto bg-gray-100 dark:bg-gray-800 border-none rounded-xl px-3 py-2 text-xs md:text-sm font-semibold focus:ring-2 focus:ring-blue-500 cursor-pointer text-gray-700 dark:text-gray-200 appearance-none pr-8 relative">
-                        <option value="vi">🇻🇳 Tiếng Việt</option>
-                        <option value="en">🇺🇸 English</option>
-                        <option value="zh">🇨🇳 中文</option>
-                        <option value="ja">🇯🇵 日本語</option>
-                    </select>
-                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-500">
-                        <i class="fas fa-chevron-down text-xs"></i>
-                    </div>
-                </div>
-            </div>
 
         </div>
     </header>
@@ -190,87 +177,6 @@
     </footer>
 
     <script>
-
-        // 2. Cấu hình Dữ liệu Đa ngôn ngữ (Hỗ trợ 4 thứ tiếng chính)
-        const translations = {
-            vi: {
-                title: "FB Video Downloader AI",
-                badge: "Hệ thống v1.0.0 (Tối ưu AI)",
-                heading: "Tải Video Facebook",
-                subheading: "Nhập vào liên kết (URL) và chọn chất lượng video bạn mong muốn",
-                labelUrl: "Đường dẫn video Facebook",
-                labelQuality: "Chọn Chất Lượng Video",
-                btnDownload: "Bắt Đầu Phân Tích Video",
-                loadingText: "Hệ thống AI đang xử lý video của bạn...",
-                successTitle: "Video Đã Sẵn Sàng!",
-                btnSave: "Tải Xuống Ngay Bây Giờ",
-                errorTitle: "Hệ thống báo lỗi",
-                feat1Title: "Tốc Độ Siêu Tốc",
-                feat1Desc: "Tối ưu hóa lõi xử lý bởi FastAPI cho phản hồi tức thì.",
-                feat2Title: "Đa Tùy Chọn",
-                feat2Desc: "Hỗ trợ trích xuất từ 360p đến độ phân giải gốc cao nhất.",
-                feat3Title: "An Toàn Tuyệt Đối",
-                feat3Desc: "Tích hợp bộ đệm giới hạn băng thông chống spam ddos."
-            },
-            en: {
-                title: "FB Video Downloader AI",
-                badge: "Engine v1.0.0 (AI-Optimized)",
-                heading: "Download Facebook Videos",
-                subheading: "Enter the video link (URL) and choose your preferred quality",
-                labelUrl: "Facebook Video URL",
-                labelQuality: "Select Video Quality",
-                btnDownload: "Start Analyzing Video",
-                loadingText: "AI System is processing your video...",
-                successTitle: "Video Ready!",
-                btnSave: "Download Right Now",
-                errorTitle: "System Error",
-                feat1Title: "Ultra Fast Speed",
-                feat1Desc: "Backend optimized with FastAPI for immediate response.",
-                feat2Title: "Multi-Options",
-                feat2Desc: "Supports high-res extraction from 360p up to native quality.",
-                feat3Title: "Secure Protection",
-                feat3Desc: "Integrated rate-limiting to block abusive traffic and spam."
-            },
-            zh: {
-                title: "AI 脸书视频下载器",
-                badge: "引擎 v1.0.0 (AI 优化)",
-                heading: "下载 Facebook 视频",
-                subheading: "输入视频链接 (URL) 并选择您需要的画质",
-                labelUrl: "Facebook 视频网址",
-                labelQuality: "选择视频质量",
-                btnDownload: "开始解析视频",
-                loadingText: "AI 系统正在处理您的视频...",
-                successTitle: "视频已就绪！",
-                btnSave: "立即下载",
-                errorTitle: "系统错误",
-                feat1Title: "极速响应",
-                feat1Desc: "基于 FastAPI 优化，提供秒级解析服务。",
-                feat2Title: "多分辨率",
-                feat2Desc: "支持从 360p 到原片最高画质的高清解析。",
-                feat3Title: "安全防护",
-                feat3Desc: "内置速率限制机制，有效防止恶意攻击。"
-            },
-            ja: {
-                title: "FB 動画ダウンローダー AI",
-                badge: "エンジン v1.0.0 (AI最適化)",
-                heading: "Facebook 動画ダウンロード",
-                subheading: "URLを入力し、ご希望の画質を選択してください",
-                labelUrl: "Facebook 動画 URL",
-                labelQuality: "動画の画質を選択",
-                btnDownload: "動画の解析を開始",
-                loadingText: "AIシステムが動画を処理しています...",
-                successTitle: "準備が整いました！",
-                btnSave: "今すぐダウンロード",
-                errorTitle: "システムエラー",
-                feat1Title: "超高速スピード",
-                feat1Desc: "FastAPIによる最適化で、即座に応答します。",
-                feat2Title: "マルチ画質",
-                feat2Desc: "360pから最高解像度のネイティブ画質まで対応。",
-                feat3Title: "安全な保護",
-                feat3Desc: "スパムや不正アクセスを防ぐレート制限を統合。"
-            }
-        };
-
         // 3. Hàm thực thi dịch thuật Client-side
         const langSelect = document.getElementById('langSelect');
         function applyLanguage(lang) {

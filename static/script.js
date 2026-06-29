@@ -1,5 +1,6 @@
 // Facebook Video Downloader - Frontend JavaScript
 // Made in Ceylon 🇱🇰 with ❤️ by sh13y
+// Optimized and Fixed by Lê Chí Toàn
 
 class FacebookVideoDownloader {
     constructor() {
@@ -13,7 +14,9 @@ class FacebookVideoDownloader {
     }
     
     init() {
-        this.form.addEventListener('submit', this.handleSubmit.bind(this));
+        if (this.form) {
+            this.form.addEventListener('submit', this.handleSubmit.bind(this));
+        }
     }
     
     async handleSubmit(e) {
@@ -21,9 +24,11 @@ class FacebookVideoDownloader {
         
         const url = document.getElementById('videoUrl').value.trim();
         const quality = document.querySelector('input[name="quality"]:checked').value;
+        const currentLang = document.documentElement.lang || 'vi';
         
         if (!this.isValidFacebookUrl(url)) {
-            this.showError('Please enter a valid Facebook video URL');
+            const errorMsg = currentLang === 'vi' ? 'Vui lòng nhập đường dẫn video Facebook hợp lệ' : 'Please enter a valid Facebook video URL';
+            this.showError(errorMsg);
             return;
         }
         
@@ -44,14 +49,16 @@ class FacebookVideoDownloader {
             const data = await response.json();
             
             if (!response.ok) {
-                throw new Error(data.detail?.message || data.message || 'Failed to download video');
+                const failMsg = currentLang === 'vi' ? 'Không thể phân tích video này' : 'Failed to download video';
+                throw new Error(data.detail?.message || data.message || failMsg);
             }
             
             this.showResults(data);
             
         } catch (error) {
             console.error('Download error:', error);
-            this.showError(error.message || 'An error occurred while processing your request');
+            const fallbackMsg = currentLang === 'vi' ? 'Đã xảy ra lỗi trong quá trình xử lý yêu cầu' : 'An error occurred while processing your request';
+            this.showError(error.message || fallbackMsg);
         }
     }
     
@@ -68,9 +75,12 @@ class FacebookVideoDownloader {
     
     showLoading() {
         this.hideAllStates();
+        const currentLang = document.documentElement.lang || 'vi';
+        const loadingText = currentLang === 'vi' ? 'Đang xử lý...' : 'Processing...';
+        
         this.loadingState.classList.remove('hidden');
         this.downloadBtn.disabled = true;
-        this.downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
+        this.downloadBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i>${loadingText}`;
     }
     
     showResults(data) {
@@ -78,30 +88,39 @@ class FacebookVideoDownloader {
         
         const videoInfo = document.getElementById('videoInfo');
         const downloadLink = document.getElementById('downloadLink');
+        const currentLang = document.documentElement.lang || 'vi';
         
-        // Populate video information
+        // Nhãn đa ngôn ngữ cho bảng thông tin video
+        const labels = {
+            title: currentLang === 'vi' ? 'Tiêu đề:' : 'Title:',
+            duration: currentLang === 'vi' ? 'Thời lượng:' : 'Duration:',
+            uploader: currentLang === 'vi' ? 'Người đăng:' : 'Uploader:',
+            views: currentLang === 'vi' ? 'Lượt xem:' : 'Views:'
+        };
+        
+        // Đổ dữ liệu thông tin video đã phân tích
         videoInfo.innerHTML = `
             <div class="grid md:grid-cols-2 gap-4">
                 <div>
-                    <p class="text-sm font-medium text-gray-700">Title:</p>
-                    <p class="text-sm text-gray-600 break-words">${this.escapeHtml(data.video_info.title || 'N/A')}</p>
+                    <p class="text-sm font-medium text-gray-700 dark:text-gray-300">${labels.title}</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 break-words">${this.escapeHtml(data.video_info.title || 'N/A')}</p>
                 </div>
                 <div>
-                    <p class="text-sm font-medium text-gray-700">Duration:</p>
-                    <p class="text-sm text-gray-600">${this.formatDuration(data.video_info.duration)}</p>
+                    <p class="text-sm font-medium text-gray-700 dark:text-gray-300">${labels.duration}</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">${this.formatDuration(data.video_info.duration)}</p>
                 </div>
                 <div>
-                    <p class="text-sm font-medium text-gray-700">Uploader:</p>
-                    <p class="text-sm text-gray-600">${this.escapeHtml(data.video_info.uploader || 'N/A')}</p>
+                    <p class="text-sm font-medium text-gray-700 dark:text-gray-300">${labels.uploader}</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">${this.escapeHtml(data.video_info.uploader || 'N/A')}</p>
                 </div>
                 <div>
-                    <p class="text-sm font-medium text-gray-700">Views:</p>
-                    <p class="text-sm text-gray-600">${this.formatNumber(data.video_info.view_count)}</p>
+                    <p class="text-sm font-medium text-gray-700 dark:text-gray-300">${labels.views}</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">${this.formatNumber(data.video_info.view_count)}</p>
                 </div>
             </div>
         `;
         
-        // Set download link with streaming endpoint
+        // Thiết lập endpoint luồng tải tệp tin
         const videoId = this.generateVideoId(data.video_info.title);
         const streamUrl = `/stream/${videoId}?url=${encodeURIComponent(data.download_url)}`;
         const fileName = this.generateFileName(data.video_info.title);
@@ -109,42 +128,34 @@ class FacebookVideoDownloader {
         downloadLink.href = streamUrl;
         downloadLink.download = fileName;
         
-        // Force download on click by opening in new window
-// Định nghĩa các thành phần text và icon riêng biệt
-const downloadText = document.getElementById('downloadText');
-const downloadIcon = document.getElementById('downloadIcon');
-
-downloadLink.onclick = (e) => {
-    e.preventDefault();
-    
-    // Chỉ thay đổi hiệu ứng quay và chữ, giữ nguyên màu nền nút bấm
-    if (downloadIcon) downloadIcon.className = "fas fa-spinner fa-spin mr-2 text-white";
-    if (downloadText) downloadText.textContent = "Downloading...";
-    downloadLink.style.pointerEvents = 'none';
-    
-    const downloadWindow = window.open(streamUrl, '_blank');
-    
-    setTimeout(() => {
-        // Trả lại trạng thái icon mũi tên và chữ ban đầu sau khi tải xong
-        if (downloadIcon) downloadIcon.className = "fas fa-download mr-2 text-white";
-        if (downloadText) {
-            // Kiểm tra nếu đang dùng ngôn ngữ tiếng Việt thì trả về Tiếng Việt, ngược lại trả về Tiếng Anh
-            const currentLang = document.documentElement.lang || 'vi';
-            if (currentLang === 'vi') {
-                downloadText.textContent = "Tải Xuống Ngay Bây Giờ";
-            } else {
-                downloadText.textContent = "Download Now";
-            }
-        }
-        downloadLink.style.pointerEvents = '';
-        if (downloadWindow) {
-            downloadWindow.close();
-        }
-    }, 2000);
-    
-    return false;
-};
-
+        // Xử lý sự kiện tải xuống, tương thích hoàn toàn cấu trúc HTML mới
+        downloadLink.onclick = (e) => {
+            e.preventDefault();
+            
+            const downloadText = document.getElementById('downloadText');
+            const downloadIcon = document.getElementById('downloadIcon');
+            
+            // Cập nhật trạng thái đang tải xuống
+            if (downloadIcon) downloadIcon.className = "fas fa-spinner fa-spin mr-2 text-white";
+            if (downloadText) downloadText.textContent = currentLang === 'vi' ? "Đang tải xuống..." : "Downloading...";
+            downloadLink.style.pointerEvents = 'none';
+            
+            const downloadWindow = window.open(streamUrl, '_blank');
+            
+            setTimeout(() => {
+                // Khôi phục trạng thái nút bấm ban đầu sau 2 giây
+                if (downloadIcon) downloadIcon.className = "fas fa-download mr-2 text-white";
+                if (downloadText) {
+                    downloadText.textContent = currentLang === 'vi' ? "Tải Xuống Ngay Bây Giờ" : "Download Now";
+                }
+                downloadLink.style.pointerEvents = '';
+                if (downloadWindow) {
+                    downloadWindow.close();
+                }
+            }, 2000);
+            
+            return false;
+        };
         
         this.results.classList.remove('hidden');
         this.resetButton();
@@ -164,8 +175,11 @@ downloadLink.onclick = (e) => {
     }
     
     resetButton() {
+        const currentLang = document.documentElement.lang || 'vi';
+        const btnText = currentLang === 'vi' ? 'Bắt Đầu Phân Tích Video' : 'Download Video';
+        
         this.downloadBtn.disabled = false;
-        this.downloadBtn.innerHTML = '<i class="fas fa-download mr-2"></i>Download Video';
+        this.downloadBtn.innerHTML = `<i class="fas fa-arrow-down-long animate-bounce mr-2"></i>${btnText}`;
     }
     
     escapeHtml(text) {
@@ -176,20 +190,24 @@ downloadLink.onclick = (e) => {
     
     formatDuration(seconds) {
         if (!seconds) return 'N/A';
+        const currentLang = document.documentElement.lang || 'vi';
         
         const hours = Math.floor(seconds / 3600);
         const minutes = Math.floor((seconds % 3600) / 60);
         const remainingSeconds = Math.floor(seconds % 60);
         
+        const unit = {
+            hours: currentLang === 'vi' ? ' Giờ' : ' Hours',
+            mins: currentLang === 'vi' ? ' Phút' : ' Min',
+            secs: currentLang === 'vi' ? ' Giây' : ' Sec'
+        };
+        
         if (hours > 0) {
-            // For videos longer than 1 hour: "1:30:45 Hours"
-            return `${hours}:${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')} Hours`;
+            return `${hours}:${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}${unit.hours}`;
         } else if (minutes > 0) {
-            // For videos longer than 1 minute: "5:30 Min"
-            return `${minutes}:${remainingSeconds.toString().padStart(2, '0')} Min`;
+            return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}${unit.mins}`;
         } else {
-            // For videos less than 1 minute: "45 Sec"
-            return `${remainingSeconds} Sec`;
+            return `${remainingSeconds}${unit.secs}`;
         }
     }
     
@@ -201,11 +219,10 @@ downloadLink.onclick = (e) => {
     generateFileName(title) {
         if (!title) return 'facebook_video.mp4';
         
-        // Clean title for filename
         const cleanTitle = title
-            .replace(/[^\w\s-]/g, '') // Remove special characters
-            .replace(/\s+/g, '_') // Replace spaces with underscores
-            .substring(0, 50); // Limit length
+            .replace(/[^\w\s-]/g, '') 
+            .replace(/\s+/g, '_') 
+            .substring(0, 50); 
             
         return `${cleanTitle}.mp4`;
     }
@@ -213,23 +230,22 @@ downloadLink.onclick = (e) => {
     generateVideoId(title) {
         if (!title) return 'facebook_video';
         
-        // Create a simple ID from title
         return title
-            .replace(/[^\w\s-]/g, '') // Remove special characters
-            .replace(/\s+/g, '_') // Replace spaces with underscores
+            .replace(/[^\w\s-]/g, '') 
+            .replace(/\s+/g, '_') 
             .toLowerCase()
-            .substring(0, 30); // Limit length
+            .substring(0, 30); 
     }
 }
 
-// Initialize the application when DOM is loaded
+// Khởi chạy ứng dụng khi DOM sẵn sàng
 document.addEventListener('DOMContentLoaded', () => {
     new FacebookVideoDownloader();
 });
 
-// Add some UI enhancements
+// Thêm các hiệu ứng bổ trợ giao diện người dùng
 document.addEventListener('DOMContentLoaded', () => {
-    // Add smooth scrolling for internal links
+    // Cuộn mượt cho các liên kết nội bộ
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -240,13 +256,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // Add input validation feedback
+    // Kiểm tra và phản hồi trạng thái hợp lệ của URL đầu vào trực tiếp
     const urlInput = document.getElementById('videoUrl');
-    urlInput.addEventListener('input', function() {
-        const url = this.value.trim();
-        const isValid = url === '' || /^https?:\/\/(www\.)?(facebook\.com|fb\.watch)/.test(url);
-        
-        this.classList.toggle('border-red-300', !isValid && url !== '');
-        this.classList.toggle('border-green-300', isValid && url !== '');
-    });
+    if (urlInput) {
+        urlInput.addEventListener('input', function() {
+            const url = this.value.trim();
+            const isValid = url === '' || /^https?:\/\/(www\.)?(facebook\.com|fb\.watch)/.test(url);
+            
+            this.classList.toggle('border-red-300', !isValid && url !== '');
+            this.classList.toggle('border-green-300', isValid && url !== '');
+        });
+    }
 });

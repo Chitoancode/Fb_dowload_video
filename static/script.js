@@ -176,7 +176,7 @@ class FacebookVideoDownloader {
     
     resetButton() {
         const currentLang = document.documentElement.lang || 'vi';
-        const btnText = currentLang === 'vi' ? 'Bắt Đầu Phân Tích Video' : 'Download Video';
+        const btnText = currentLang === 'vi' ? 'Phân Tích Video Thành Công' : 'Download Video';
         
         this.downloadBtn.disabled = false;
         this.downloadBtn.innerHTML = `<i class="fas fa-arrow-down-long animate-bounce mr-2"></i>${btnText}`;

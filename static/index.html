@@ -38,136 +38,136 @@
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100 min-h-screen flex flex-col justify-between">
-
-    <header class="border-b border-gray-200 dark:border-gray-800 bg-white/90 dark:bg-gray-900/90 backdrop-blur sticky top-0 z-50 transition-all">
-        <div class="container mx-auto px-4 py-3 flex flex-col sm:flex-row justify-between items-center gap-3">
-            <div class="flex items-center space-x-3 w-full sm:w-auto justify-between sm:justify-start">
-                <div class="flex items-center space-x-2">
-                    <div class="bg-blue-600 p-2 rounded-xl text-white shadow-lg shadow-blue-500/20 flex items-center justify-center">
-                        <i class="fab fa-facebook text-lg"></i>
-                    </div>
-                    <h1 class="text-lg font-bold bg-gradient-to-r from-blue-600 to-indigo-500 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent data-translate" data-key="title">
-                        FB Video Downloader AI
-                    </h1>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="gradient-bg text-white py-6">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-center md:justify-between">
+                <div class="flex items-center space-x-3">
+                    <i class="fab fa-facebook text-2xl md:text-3xl"></i>
+                    <h1 class="text-xl md:text-2xl font-bold">Facebook Video Downloader</h1>
                 </div>
             </div>
         </div>
     </header>
 
-    <main class="container mx-auto px-4 py-8 flex-grow flex items-center justify-center">
-        <div class="max-w-3xl w-full mx-auto space-y-8">
-            
-            <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-xl p-6 md:p-8 border border-gray-100 dark:border-gray-800 glass-card ai-glow transition-all duration-300">
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-4 md:py-8">
+        <!-- Download Form -->
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-white rounded-lg shadow-lg p-4 md:p-8 card-hover">
                 <div class="text-center mb-8">
-                    <span class="px-3 py-1 text-xs font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50 rounded-full data-translate" data-key="badge">Engine v1.0.0 (AI-Optimized)</span>
-                    <h2 class="text-2xl md:text-3xl font-extrabold text-gray-900 dark:text-white mt-3 mb-2 data-translate" data-key="heading">Tải Video Facebook</h2>
-                    <p class="text-gray-500 dark:text-gray-400 text-sm data-translate" data-key="subheading">Nhập vào liên kết (URL) và chọn chất lượng video bạn mong muốn</p>
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Download Facebook Videos</h2>
+                    <p class="text-gray-600 text-sm md:text-base">Enter a Facebook video URL and select your preferred quality</p>
                 </div>
 
-                <form id="downloadForm" class="space-y-6">
+                <form id="downloadForm" class="space-y-4 md:space-y-6">
+                    <!-- URL Input -->
                     <div>
-                        <label for="videoUrl" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 data-translate" data-key="labelUrl">
-                            Đường dẫn video Facebook
+                        <label for="videoUrl" class="block text-sm font-medium text-gray-700 mb-2">
+                            Facebook Video URL
                         </label>
                         <div class="relative">
                             <input
                                 type="url"
                                 id="videoUrl"
-                                placeholder="https://www.facebook.com/..."
-                                class="w-full pl-4 pr-12 py-3.5 bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:text-white transition-all text-sm md:text-base"
+                                placeholder="https://www.facebook.com/share/v/..."
+                                class="w-full px-3 md:px-4 py-3 text-sm md:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                                 required
                             >
-                            <i class="fas fa-link absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            <i class="fas fa-link absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                         </div>
                     </div>
 
+                    <!-- Quality Selection -->
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 data-translate" data-key="labelQuality">Chọn Chất Lượng Video</label>
-                        <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
-                            <label class="flex items-center justify-center p-3 border border-gray-200 dark:border-gray-700 rounded-xl cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-950/30 transition-all select-none">
-                                <input type="radio" name="quality" value="best" checked class="sr-only">
-                                <span class="text-sm font-medium">Best</span>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Video Quality</label>
+                        <div class="grid grid-cols-2 md:grid-cols-5 gap-2 md:gap-3">
+                            <label class="flex items-center p-2 md:p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-blue-50 transition-colors">
+                                <input type="radio" name="quality" value="best" checked class="mr-2">
+                                <span class="text-xs md:text-sm font-medium">Best</span>
                             </label>
-                            <label class="flex items-center justify-center p-3 border border-gray-200 dark:border-gray-700 rounded-xl cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-950/30 transition-all select-none">
-                                <input type="radio" name="quality" value="1080p" class="sr-only">
-                                <span class="text-sm font-medium">1080p</span>
+                            <label class="flex items-center p-2 md:p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-blue-50 transition-colors">
+                                <input type="radio" name="quality" value="1080p" class="mr-2">
+                                <span class="text-xs md:text-sm font-medium">1080p</span>
                             </label>
-                            <label class="flex items-center justify-center p-3 border border-gray-200 dark:border-gray-700 rounded-xl cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-950/30 transition-all select-none">
-                                <input type="radio" name="quality" value="720p" class="sr-only">
-                                <span class="text-sm font-medium">720p</span>
+                            <label class="flex items-center p-2 md:p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-blue-50 transition-colors">
+                                <input type="radio" name="quality" value="720p" class="mr-2">
+                                <span class="text-xs md:text-sm font-medium">720p</span>
                             </label>
-                            <label class="flex items-center justify-center p-3 border border-gray-200 dark:border-gray-700 rounded-xl cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-950/30 transition-all select-none">
-                                <input type="radio" name="quality" value="360p" class="sr-only">
-                                <span class="text-sm font-medium">360p</span>
+                            <label class="flex items-center p-2 md:p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-blue-50 transition-colors">
+                                <input type="radio" name="quality" value="360p" class="mr-2">
+                                <span class="text-xs md:text-sm font-medium">360p</span>
                             </label>
-                            <label class="flex items-center justify-center p-3 border border-gray-200 dark:border-gray-700 rounded-xl cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-950/30 transition-all select-none">
-                                <input type="radio" name="quality" value="worst" class="sr-only">
-                                <span class="text-sm font-medium">Worst</span>
+                            <label class="flex items-center p-2 md:p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-blue-50 transition-colors">
+                                <input type="radio" name="quality" value="worst" class="mr-2">
+                                <span class="text-xs md:text-sm font-medium">Worst</span>
                             </label>
                         </div>
                     </div>
 
+                    <!-- Download Button -->
                     <button
                         type="submit"
                         id="downloadBtn"
-                        class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-3.5 px-6 rounded-xl transition-all transform active:scale-[0.98] shadow-lg shadow-blue-500/20 text-sm md:text-base flex items-center justify-center space-x-2"
+                        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 md:px-6 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm md:text-base"
                     >
-                        <i class="fas fa-arrow-down-long animate-bounce"></i>
-                        <span class="data-translate" data-key="btnDownload">Bắt Đầu Phân Tích Video</span>
+                        <i class="fas fa-download mr-2"></i>
+                        Download Video
                     </button>
                 </form>
 
-                <div id="loadingState" class="hidden text-center py-8">
-                    <div class="relative inline-flex">
-                        <div class="w-10 h-10 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
-                    </div>
-                    <p class="mt-3 text-gray-500 dark:text-gray-400 text-sm data-translate" data-key="loadingText">Hệ thống đang xử lý video của bạn...</p>
+                <!-- Loading State -->
+                <div id="loadingState" class="hidden text-center py-6 md:py-8">
+                    <div class="inline-block animate-spin rounded-full h-6 md:h-8 w-6 md:w-8 border-b-2 border-blue-600"></div>
+                    <p class="mt-2 text-gray-600 text-sm md:text-base">Processing your video...</p>
                 </div>
 
-                <div id="results" class="hidden mt-6 p-5 bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/50 rounded-xl">
-                    <div class="flex items-center space-x-2 text-emerald-800 dark:text-emerald-400 font-bold mb-3">
-                        <i class="fas fa-circle-check"></i>
-                        <h3 class="text-base md:text-lg data-translate" data-key="successTitle">Video Đã Sẵn Sàng!</h3>
+                <!-- Results -->
+                <div id="results" class="hidden mt-6 md:mt-8 p-4 md:p-6 bg-green-50 border border-green-200 rounded-lg">
+                    <h3 class="text-base md:text-lg font-bold text-green-800 mb-4">Video Ready!</h3>
+                    <div id="videoInfo" class="space-y-2 mb-4 text-sm md:text-base">
+                        <!-- Video info will be populated here -->
                     </div>
-                    
-                    <div id="videoInfo" class="space-y-2 mb-4 text-sm text-gray-600 dark:text-gray-300"></div>
-                    
                     <a
                         id="downloadLink"
                         href="#"
-                        class="inline-flex items-center px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition-all text-sm w-full md:w-auto justify-center shadow-lg shadow-emerald-500/20"
+                        class="inline-flex items-center px-4 md:px-6 py-2 md:py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition-colors text-sm md:text-base w-full md:w-auto justify-center"
+                        download
                     >
-                        <i id="downloadIcon" class="fas fa-download mr-2 text-white"></i>
-                        <span id="downloadText" class="data-translate" data-key="btnSave">Download Now</span>
+                        <i class="fas fa-download mr-2"></i>
+                        Download Now
                     </a>
                 </div>
 
-                <div id="errorState" class="hidden mt-6 p-4 bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-800/50 rounded-xl">
-                    <h3 class="text-base font-bold text-rose-800 dark:text-rose-400 mb-1 data-translate" data-key="errorTitle">Hệ thống báo lỗi</h3>
-                    <p id="errorMessage" class="text-rose-600 dark:text-rose-400 text-sm"></p>
+                <!-- Error State -->
+                <div id="errorState" class="hidden mt-6 md:mt-8 p-4 md:p-6 bg-red-50 border border-red-200 rounded-lg">
+                    <h3 class="text-base md:text-lg font-bold text-red-800 mb-2">Error</h3>
+                    <p id="errorMessage" class="text-red-600 text-sm md:text-base"></p>
                 </div>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-4">
-                <div class="bg-white dark:bg-gray-900 rounded-xl p-5 border border-gray-100 dark:border-gray-800 text-center transition-all hover:border-blue-500">
-                    <i class="fas fa-bolt text-2xl text-blue-500 mb-3"></i>
-                    <h3 class="font-bold text-sm mb-1 data-translate" data-key="feat1Title">Tốc Độ Siêu Tốc</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 data-translate" data-key="feat1Desc">Tối ưu hóa lõi xử lý bởi FastAPI cho phản hồi tức thì.</p>
+            <!-- Features -->
+            <div class="grid md:grid-cols-3 gap-4 md:gap-6 mt-8 md:mt-12">
+                <div class="bg-white rounded-lg shadow-lg p-4 md:p-6 text-center card-hover">
+                    <i class="fas fa-bolt text-2xl md:text-3xl text-blue-600 mb-3 md:mb-4"></i>
+                    <h3 class="text-lg md:text-xl font-bold mb-2">Fast & Reliable</h3>
+                    <p class="text-gray-600 text-sm md:text-base">Built with FastAPI for high performance video processing</p>
                 </div>
-                <div class="bg-white dark:bg-gray-900 rounded-xl p-5 border border-gray-100 dark:border-gray-800 text-center transition-all hover:border-indigo-500">
-                    <i class="fas fa-sliders text-2xl text-indigo-500 mb-3"></i>
-                    <h3 class="font-bold text-sm mb-1 data-translate" data-key="feat2Title">Đa Tùy Chọn</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 data-translate" data-key="feat2Desc">Hỗ trợ trích xuất từ 360p đến độ phân giải gốc cao nhất.</p>
+                <div class="bg-white rounded-lg shadow-lg p-4 md:p-6 text-center card-hover">
+                    <i class="fas fa-cog text-2xl md:text-3xl text-green-600 mb-3 md:mb-4"></i>
+                    <h3 class="text-lg md:text-xl font-bold mb-2">Multiple Qualities</h3>
+                    <p class="text-gray-600 text-sm md:text-base">Support for 360p, 720p, 1080p, best, and worst quality</p>
                 </div>
-                <div class="bg-white dark:bg-gray-900 rounded-xl p-5 border border-gray-100 dark:border-gray-800 text-center transition-all hover:border-purple-500">
-                    <i class="fas fa-shield-halved text-2xl text-purple-500 mb-3"></i>
-                    <h3 class="font-bold text-sm mb-1 data-translate" data-key="feat3Title">An Toàn Tuyệt Đối</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 data-translate" data-key="feat3Desc">Cơ Chế Rate Limited Chống Spam.</p>
+                <div class="bg-white rounded-lg shadow-lg p-4 md:p-6 text-center card-hover">
+                    <i class="fas fa-shield-alt text-2xl md:text-3xl text-purple-600 mb-3 md:mb-4"></i>
+                    <h3 class="text-lg md:text-xl font-bold mb-2">Rate Limited</h3>
+                    <p class="text-gray-600 text-sm md:text-base">Built-in protection against abuse with proper error handling</p>
                 </div>
             </div>
         </div>
     </main>
+
 
     <footer class="border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 py-6 text-center text-xs text-gray-500 dark:text-gray-400">
         <p>© 2026 | Phát triển bởi <a href="https://facebook.com/lechitoan1607" class="text-blue-500 hover:underline">Toàn</a></p>

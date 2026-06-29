@@ -102,17 +102,19 @@
                 </form>
 
                 <!-- Loading State -->
-                <div id="loadingState" class="hidden text-center py-6 md:py-8">
-                    <div class="inline-block animate-spin rounded-full h-6 md:h-8 w-6 md:w-8 border-b-2 border-blue-600"></div>
-                    <p class="mt-2 text-gray-600 text-sm md:text-base">Processing your video...</p>
+                <div id="loadingState" class="hidden text-center py-8">
+                    <div class="relative inline-flex">
+                        <div class="w-10 h-10 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+                    </div>
+                    <p class="mt-3 text-gray-500 dark:text-gray-400 text-sm data-translate" data-key="loadingText">Hệ thống đang xử lý video của bạn...</p>
                 </div>
 
-                <!-- Results -->
-                <div id="results" class="hidden mt-6 md:mt-8 p-4 md:p-6 bg-green-50 border border-green-200 rounded-lg">
-                    <h3 class="text-base md:text-lg font-bold text-green-800 mb-4">Video Ready!</h3>
-                    <div id="videoInfo" class="space-y-2 mb-4 text-sm md:text-base">
-                        <!-- Video info will be populated here -->
+                <div id="results" class="hidden mt-6 p-5 bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/50 rounded-xl">
+                    <div class="flex items-center space-x-2 text-emerald-800 dark:text-emerald-400 font-bold mb-3">
+                        <i class="fas fa-circle-check"></i>
+                        <h3 class="text-base md:text-lg data-translate" data-key="successTitle">Video Đã Sẵn Sàng!</h3>
                     </div>
+                    <div id="videoInfo" class="space-y-2 mb-4 text-sm text-gray-600 dark:text-gray-300"></div>
                     <a
                         id="downloadLink"
                         href="#"

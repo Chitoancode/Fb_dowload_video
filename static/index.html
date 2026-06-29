@@ -130,16 +130,17 @@
                         <i class="fas fa-circle-check"></i>
                         <h3 class="text-base md:text-lg data-translate" data-key="successTitle">Video Đã Sẵn Sàng!</h3>
                     </div>
+                    
                     <div id="videoInfo" class="space-y-2 mb-4 text-sm text-gray-600 dark:text-gray-300"></div>
                     
                     <a
                         id="downloadLink"
                         href="#"
-                        class="inline-flex items-center px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition-all text-sm w-full md:w-auto justify-center shadow-lg shadow-emerald-500/20 data-translate"
-                        data-key="btnSave"
+                        class="inline-flex items-center px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition-all text-sm w-full md:w-auto justify-center shadow-lg shadow-emerald-500/20"
                         download
                     >
-                        <i class="fas fa-download mr-2"></i>Tải Xuống Ngay Bây Giờ
+                        <i id="downloadIcon" class="fas fa-download mr-2 text-white"></i>
+                        <span id="downloadText" class="data-translate" data-key="btnSave">Tải Xuống Ngay Bây Giờ</span>
                     </a>
                 </div>
 
@@ -176,7 +177,6 @@
     <script>
         // 3. Hàm thực thi dịch thuật Client-side
         function applyLanguage(lang) {
-            // Kiểm tra xem bộ từ điển dịch thuật đã được định nghĩa chưa nhằm tránh gây lỗi script
             if (typeof translations === 'undefined') return;
 
             document.querySelectorAll('.data-translate').forEach(element => {
@@ -185,7 +185,6 @@
                     if(element.tagName === "INPUT") {
                         element.placeholder = translations[lang][key];
                     } else {
-                        // Tìm cấu trúc Icon nằm trong vùng dịch thuật để xử lý giữ nguyên phần đồ họa
                         const icon = element.querySelector('i');
                         if (icon) {
                             element.innerHTML = '';
@@ -200,7 +199,6 @@
             document.documentElement.lang = lang;
         }
 
-        // Bọc điều kiện an toàn phòng trường hợp trang của bạn chưa hiển thị phần tử chọn ngôn ngữ
         const langSelect = document.getElementById('langSelect');
         if (langSelect) {
             langSelect.addEventListener('change', (e) => {

@@ -40,9 +40,8 @@
 </head>
 <body class="bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100 min-h-screen flex flex-col justify-between">
 
-        <header class="border-b border-gray-200 dark:border-gray-800 bg-white/90 dark:bg-gray-900/90 backdrop-blur sticky top-0 z-50 transition-all">
+    <header class="border-b border-gray-200 dark:border-gray-800 bg-white/90 dark:bg-gray-900/90 backdrop-blur sticky top-0 z-50 transition-all">
         <div class="container mx-auto px-4 py-3 flex flex-col sm:flex-row justify-between items-center gap-3">
-            
             <div class="flex items-center space-x-3 w-full sm:w-auto justify-between sm:justify-start">
                 <div class="flex items-center space-x-2">
                     <div class="bg-blue-600 p-2 rounded-xl text-white shadow-lg shadow-blue-500/20 flex items-center justify-center">
@@ -53,11 +52,8 @@
                     </h1>
                 </div>
             </div>
-
-
         </div>
     </header>
-
 
     <main class="container mx-auto px-4 py-8 flex-grow flex items-center justify-center">
         <div class="max-w-3xl w-full mx-auto space-y-8">
@@ -135,17 +131,16 @@
                         <h3 class="text-base md:text-lg data-translate" data-key="successTitle">Video Đã Sẵn Sàng!</h3>
                     </div>
                     <div id="videoInfo" class="space-y-2 mb-4 text-sm text-gray-600 dark:text-gray-300"></div>
+                    
                     <a
-    id="downloadLink"
-    href="#"
-    class="inline-flex items-center px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition-all text-sm w-full md:w-auto justify-center shadow-lg shadow-emerald-500/20"
-    download
->
-    <i class="fas fa-download mr-2"></i>
-    
-    <span class="data-translate" data-key="btnSave">Tải Xuống Ngay Bây Giờ</span>
-</a>
-
+                        id="downloadLink"
+                        href="#"
+                        class="inline-flex items-center px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition-all text-sm w-full md:w-auto justify-center shadow-lg shadow-emerald-500/20 data-translate"
+                        data-key="btnSave"
+                        download
+                    >
+                        <i class="fas fa-download mr-2"></i>Tải Xuống Ngay Bây Giờ
+                    </a>
                 </div>
 
                 <div id="errorState" class="hidden mt-6 p-4 bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-800/50 rounded-xl">
@@ -180,16 +175,17 @@
 
     <script>
         // 3. Hàm thực thi dịch thuật Client-side
-        const langSelect = document.getElementById('langSelect');
         function applyLanguage(lang) {
+            // Kiểm tra xem bộ từ điển dịch thuật đã được định nghĩa chưa nhằm tránh gây lỗi script
+            if (typeof translations === 'undefined') return;
+
             document.querySelectorAll('.data-translate').forEach(element => {
-                const key = element.getAttribute('data-translate');
+                const key = element.getAttribute('data-translate') || element.getAttribute('data-key');
                 if (translations[lang] && translations[lang][key]) {
-                    // Nếu là thẻ Input có placeholder thì dịch placeholder, ngược lại dịch text
                     if(element.tagName === "INPUT") {
                         element.placeholder = translations[lang][key];
                     } else {
-                        // Giữ lại cấu trúc Icon nếu có bên trong thẻ nút bấm
+                        // Tìm cấu trúc Icon nằm trong vùng dịch thuật để xử lý giữ nguyên phần đồ họa
                         const icon = element.querySelector('i');
                         if (icon) {
                             element.innerHTML = '';
@@ -204,14 +200,17 @@
             document.documentElement.lang = lang;
         }
 
-        langSelect.addEventListener('change', (e) => {
-            applyLanguage(e.target.value);
-        });
+        // Bọc điều kiện an toàn phòng trường hợp trang của bạn chưa hiển thị phần tử chọn ngôn ngữ
+        const langSelect = document.getElementById('langSelect');
+        if (langSelect) {
+            langSelect.addEventListener('change', (e) => {
+                applyLanguage(e.target.value);
+            });
+        }
 
-        // 4. Custom lại giao diện Radio Button Chọn Chất Lượng (Style Click cho Hiện Đại)
+        // 4. Custom giao diện Radio Button Chọn Chất Lượng Video
         const labels = document.querySelectorAll('input[name="quality"]');
         labels.forEach(radio => {
-            // Thiết lập trạng thái active ban đầu cho nút "Best"
             if(radio.checked) {
                 radio.parentElement.classList.add('bg-blue-600', 'text-white', 'border-blue-600', 'dark:bg-blue-600');
             }
@@ -224,6 +223,6 @@
             });
         });
     </script>
-<script src="/static/script.js"></script>
+    <script src="/static/script.js"></script>
 </body>
 </html>

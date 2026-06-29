@@ -110,30 +110,41 @@ class FacebookVideoDownloader {
         downloadLink.download = fileName;
         
         // Force download on click by opening in new window
-        downloadLink.onclick = (e) => {
-            e.preventDefault();
-            
-            // Show downloading state
-            downloadLink.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Downloading...';
-            downloadLink.style.pointerEvents = 'none';
-            
-            // Open the download URL in a new window/tab
-            // This forces the browser to treat it as a download
-            const downloadWindow = window.open(streamUrl, '_blank');
-            
-            // Reset button after a short delay
-            setTimeout(() => {
-                downloadLink.innerHTML = '<i class="fas fa-download mr-2"></i>Download Now';
-                downloadLink.style.pointerEvents = '';
-                
-                // Close the download window if it's still open (some browsers keep it open)
-                if (downloadWindow) {
-                    downloadWindow.close();
-                }
-            }, 2000);
-            
-            return false;
-        };
+// Định nghĩa các thành phần text và icon riêng biệt
+const downloadText = document.getElementById('downloadText');
+const downloadIcon = document.getElementById('downloadIcon');
+
+downloadLink.onclick = (e) => {
+    e.preventDefault();
+    
+    // Chỉ thay đổi hiệu ứng quay và chữ, giữ nguyên màu nền nút bấm
+    if (downloadIcon) downloadIcon.className = "fas fa-spinner fa-spin mr-2 text-white";
+    if (downloadText) downloadText.textContent = "Downloading...";
+    downloadLink.style.pointerEvents = 'none';
+    
+    const downloadWindow = window.open(streamUrl, '_blank');
+    
+    setTimeout(() => {
+        // Trả lại trạng thái icon mũi tên và chữ ban đầu sau khi tải xong
+        if (downloadIcon) downloadIcon.className = "fas fa-download mr-2 text-white";
+        if (downloadText) {
+            // Kiểm tra nếu đang dùng ngôn ngữ tiếng Việt thì trả về Tiếng Việt, ngược lại trả về Tiếng Anh
+            const currentLang = document.documentElement.lang || 'vi';
+            if (currentLang === 'vi') {
+                downloadText.textContent = "Tải Xuống Ngay Bây Giờ";
+            } else {
+                downloadText.textContent = "Download Now";
+            }
+        }
+        downloadLink.style.pointerEvents = '';
+        if (downloadWindow) {
+            downloadWindow.close();
+        }
+    }, 2000);
+    
+    return false;
+};
+
         
         this.results.classList.remove('hidden');
         this.resetButton();

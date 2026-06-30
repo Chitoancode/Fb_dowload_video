@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trình Tải Xuống Video Facebook </title>
+    <title>Facebook Video Downloader</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
     <style>
         .gradient-bg {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -27,10 +25,8 @@
         <div class="container mx-auto px-4">
             <div class="flex items-center justify-center md:justify-between">
                 <div class="flex items-center space-x-3">
-                    <i class="fab fa-facebook text-lg"></i>
-                    <h1 class="text-lg font-bold bg-gradient-to-r from-blue-600 to-indigo-500 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent data-translate" data-key="title">
-                        Trình Tải Xuống Video Facebook
-                    </h1>
+                    <i class="fab fa-facebook text-2xl md:text-3xl"></i>
+                    <h1 class="text-xl md:text-2xl font-bold">Facebook Video Downloader</h1>
                 </div>
             </div>
         </div>
@@ -42,16 +38,15 @@
         <div class="max-w-4xl mx-auto">
             <div class="bg-white rounded-lg shadow-lg p-4 md:p-8 card-hover">
                 <div class="text-center mb-8">
-                    <span class="px-3 py-1 text-xs font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50 rounded-full data-translate" data-key="badge">Engine v1.0.0 (AI-Optimized)</span>
-                    <h2 class="text-2xl md:text-3xl font-extrabold text-gray-900 dark:text-white mt-3 mb-2 data-translate" data-key="heading">Tải Video Facebook</h2>
-                    <p class="text-gray-500 dark:text-gray-400 text-sm data-translate" data-key="subheading">Nhập vào liên kết (URL) và chọn chất lượng video bạn mong muốn</p>
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Download Facebook Videos</h2>
+                    <p class="text-gray-600 text-sm md:text-base">Enter a Facebook video URL and select your preferred quality</p>
                 </div>
 
                 <form id="downloadForm" class="space-y-4 md:space-y-6">
                     <!-- URL Input -->
                     <div>
                         <label for="videoUrl" class="block text-sm font-medium text-gray-700 mb-2">
-                            Nhập Liên Kết Video Từ Facebook
+                            Facebook Video URL
                         </label>
                         <div class="relative">
                             <input
@@ -67,8 +62,7 @@
 
                     <!-- Quality Selection -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Chọn Chất Lượng Video</label>
-                        <h1>Ưu Tiên `Best ` Chất Lượng Tốt Nhất </h1>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Video Quality</label>
                         <div class="grid grid-cols-2 md:grid-cols-5 gap-2 md:gap-3">
                             <label class="flex items-center p-2 md:p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-blue-50 transition-colors">
                                 <input type="radio" name="quality" value="best" checked class="mr-2">
@@ -105,19 +99,17 @@
                 </form>
 
                 <!-- Loading State -->
-                <div id="loadingState" class="hidden text-center py-8">
-                    <div class="relative inline-flex">
-                        <div class="w-10 h-10 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
-                    </div>
-                    <p class="mt-3 text-gray-500 dark:text-gray-400 text-sm data-translate" data-key="loadingText">Hệ thống đang xử lý video của bạn...</p>
+                <div id="loadingState" class="hidden text-center py-6 md:py-8">
+                    <div class="inline-block animate-spin rounded-full h-6 md:h-8 w-6 md:w-8 border-b-2 border-blue-600"></div>
+                    <p class="mt-2 text-gray-600 text-sm md:text-base">Processing your video...</p>
                 </div>
 
-                <div id="results" class="hidden mt-6 p-5 bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/50 rounded-xl">
-                    <div class="flex items-center space-x-2 text-emerald-800 dark:text-emerald-400 font-bold mb-3">
-                        <i class="fas fa-circle-check"></i>
-                        <h3 class="text-base md:text-lg data-translate" data-key="successTitle">Video Đã Sẵn Sàng!</h3>
+                <!-- Results -->
+                <div id="results" class="hidden mt-6 md:mt-8 p-4 md:p-6 bg-green-50 border border-green-200 rounded-lg">
+                    <h3 class="text-base md:text-lg font-bold text-green-800 mb-4">Video Ready!</h3>
+                    <div id="videoInfo" class="space-y-2 mb-4 text-sm md:text-base">
+                        <!-- Video info will be populated here -->
                     </div>
-                    <div id="videoInfo" class="space-y-2 mb-4 text-sm text-gray-600 dark:text-gray-300"></div>
                     <a
                         id="downloadLink"
                         href="#"
@@ -137,78 +129,46 @@
             </div>
 
             <!-- Features -->
-            <div class="grid md:grid-cols-3 gap-4">
-                <div class="bg-white dark:bg-gray-900 rounded-xl p-5 border border-gray-100 dark:border-gray-800 text-center transition-all hover:border-blue-500">
-                    <i class="fas fa-bolt text-2xl text-blue-500 mb-3"></i>
-                    <h3 class="font-bold text-sm mb-1 data-translate" data-key="feat1Title">Tốc Độ Siêu Tốc</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 data-translate" data-key="feat1Desc">Tối ưu hóa lõi xử lý bởi FastAPI cho phản hồi tức thì.</p>
+            <div class="grid md:grid-cols-3 gap-4 md:gap-6 mt-8 md:mt-12">
+                <div class="bg-white rounded-lg shadow-lg p-4 md:p-6 text-center card-hover">
+                    <i class="fas fa-bolt text-2xl md:text-3xl text-blue-600 mb-3 md:mb-4"></i>
+                    <h3 class="text-lg md:text-xl font-bold mb-2">Fast & Reliable</h3>
+                    <p class="text-gray-600 text-sm md:text-base">Built with FastAPI for high performance video processing</p>
                 </div>
-                <div class="bg-white dark:bg-gray-900 rounded-xl p-5 border border-gray-100 dark:border-gray-800 text-center transition-all hover:border-indigo-500">
-                    <i class="fas fa-sliders text-2xl text-indigo-500 mb-3"></i>
-                    <h3 class="font-bold text-sm mb-1 data-translate" data-key="feat2Title">Đa Tùy Chọn</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 data-translate" data-key="feat2Desc">Hỗ trợ trích xuất từ 360p đến độ phân giải gốc cao nhất.</p>
+                <div class="bg-white rounded-lg shadow-lg p-4 md:p-6 text-center card-hover">
+                    <i class="fas fa-cog text-2xl md:text-3xl text-green-600 mb-3 md:mb-4"></i>
+                    <h3 class="text-lg md:text-xl font-bold mb-2">Multiple Qualities</h3>
+                    <p class="text-gray-600 text-sm md:text-base">Support for 360p, 720p, 1080p, best, and worst quality</p>
                 </div>
-                <div class="bg-white dark:bg-gray-900 rounded-xl p-5 border border-gray-100 dark:border-gray-800 text-center transition-all hover:border-purple-500">
-                    <i class="fas fa-shield-halved text-2xl text-purple-500 mb-3"></i>
-                    <h3 class="font-bold text-sm mb-1 data-translate" data-key="feat3Title">An Toàn Tuyệt Đối</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 data-translate" data-key="feat3Desc">Cơ Chế Giới Hạn Yêu Cầu Chống Spam.</p>
+                <div class="bg-white rounded-lg shadow-lg p-4 md:p-6 text-center card-hover">
+                    <i class="fas fa-shield-alt text-2xl md:text-3xl text-purple-600 mb-3 md:mb-4"></i>
+                    <h3 class="text-lg md:text-xl font-bold mb-2">Rate Limited</h3>
+                    <p class="text-gray-600 text-sm md:text-base">Built-in protection against abuse with proper error handling</p>
                 </div>
             </div>
         </div>
     </main>
 
-
-    <footer class="border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 py-6 text-center text-xs text-gray-500 dark:text-gray-400">
-        <p>© 2026 | Phát triển bởi <a href="https://facebook.com/lechitoan1607" class="text-blue-500 hover:underline">Toàn</a></p>
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-16">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0 text-center md:text-left">
+                    <p class="text-sm">© 2025 | made in ceylon with ❤️ by <a href="https://github.com/sh13y" class="text-blue-400 hover:text-blue-300">sh13y</a></p>
+                    <p class="text-xs text-gray-400 mt-1">Licensed under WPFTL</p>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="https://github.com/sh13y/Facebook-Video-Download-API" class="text-gray-400 hover:text-white transition-colors" title="View on GitHub">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                    <a href="/docs" class="text-gray-400 hover:text-white transition-colors" title="API Documentation">
+                        <i class="fas fa-book text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
     </footer>
 
-    <script>
-        // 3. Hàm thực thi dịch thuật Client-side
-        function applyLanguage(lang) {
-            if (typeof translations === 'undefined') return;
-
-            document.querySelectorAll('.data-translate').forEach(element => {
-                const key = element.getAttribute('data-translate') || element.getAttribute('data-key');
-                if (translations[lang] && translations[lang][key]) {
-                    if(element.tagName === "INPUT") {
-                        element.placeholder = translations[lang][key];
-                    } else {
-                        const icon = element.querySelector('i');
-                        if (icon) {
-                            element.innerHTML = '';
-                            element.appendChild(icon);
-                            element.appendChild(document.createTextNode(' ' + translations[lang][key]));
-                        } else {
-                            element.textContent = translations[lang][key];
-                        }
-                    }
-                }
-            });
-            document.documentElement.lang = lang;
-        }
-
-        const langSelect = document.getElementById('langSelect');
-        if (langSelect) {
-            langSelect.addEventListener('change', (e) => {
-                applyLanguage(e.target.value);
-            });
-        }
-
-        // 4. Custom giao diện Radio Button Chọn Chất Lượng Video
-        const labels = document.querySelectorAll('input[name="quality"]');
-        labels.forEach(radio => {
-            if(radio.checked) {
-                radio.parentElement.classList.add('bg-blue-600', 'text-white', 'border-blue-600', 'dark:bg-blue-600');
-            }
-            
-            radio.addEventListener('change', () => {
-                labels.forEach(r => r.parentElement.className = "flex items-center justify-center p-3 border border-gray-200 dark:border-gray-700 rounded-xl cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-950/30 transition-all select-none");
-                if (radio.checked) {
-                    radio.parentElement.classList.add('bg-blue-600', 'text-white', 'border-blue-600', 'dark:bg-blue-600');
-                }
-            });
-        });
-    </script>
     <script src="/static/script.js"></script>
 </body>
 </html>
